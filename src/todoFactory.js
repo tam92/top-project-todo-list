@@ -16,6 +16,17 @@ export default function todoFactory(title, description, dueDate, priority, proje
     // let _checklist = checklist;
     let _project = project;
 
+    function createJSON() {
+        const todo = `{
+            "title": "${_title}",
+            "description": "${_description}",
+            "dueDate": "${_dueDate}",
+            "priority": "${_priority}",
+            "project": "${_project}"
+        }`;
+        return todo;
+    }
+
     return {
         // Getter methods
         getTitle() {return _title;},
@@ -34,5 +45,8 @@ export default function todoFactory(title, description, dueDate, priority, proje
         // setNotes(newNotes) {_notes = newNotes;},
         // setChecklist(newChecklist) {_checklist = newChecklist;},
         setProject(newProject) {_project = newProject;},
+
+        // Functions
+        createJSON,
     };
 }
