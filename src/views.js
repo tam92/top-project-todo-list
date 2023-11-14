@@ -1,3 +1,5 @@
+import { format, parseISO } from "date-fns";
+
 // Creates and returns a single card
 export function createCard(title, description, dueDate, priority, project) {
     
@@ -14,7 +16,7 @@ export function createCard(title, description, dueDate, priority, project) {
     descriptionCard.innerText = description;
 
     const dueDateCard = document.createElement('p');
-    dueDateCard.innerText = "Due date: " + dueDate;
+    dueDateCard.innerText = "Due date: " + format((dueDate), 'PPPP');
 
     const priorityCard = document.createElement('p');
     priorityCard.innerText = "Priority: " + priority;
@@ -106,17 +108,17 @@ export function createForm() {
     dataList.setAttribute("id", "priorityName");
     const lowOp = document.createElement("option");
     lowOp.innerHTML = "Low";
-    lowOp.setAttribute("value", "low");
+    lowOp.setAttribute("value", "Low");
     lowOp.selected = true;
     const mediumOp = document.createElement("option");
     mediumOp.innerHTML = "Medium";
-    mediumOp.setAttribute("value", "medium");
+    mediumOp.setAttribute("value", "Medium");
     const highOp = document.createElement("option");
     highOp.innerHTML = "High";
-    highOp.setAttribute("value", "high");
+    highOp.setAttribute("value", "High");
     const criticalOp = document.createElement("option");
     criticalOp.innerHTML = "Critical";
-    criticalOp.setAttribute("value", "critical");
+    criticalOp.setAttribute("value", "Critical");
         // Append the options
         selectInput.appendChild(lowOp);
         selectInput.appendChild(mediumOp);

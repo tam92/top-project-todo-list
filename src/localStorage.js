@@ -4,26 +4,26 @@ export function populateStorage() {
 
     if (storageAvailable('localStorage')) {
         // We can use it
-        const todo1 = {
-            "title": "Lavadora",
-            "description": "Poner una lavadora con las sábanas de la semana.",
-            "dueDate": "17/11/2023",
-            "priority": "High",
-            "project": "Casa"
-        };
+        // const todo1 = {
+        //     "title": "Lavadora",
+        //     "description": "Poner una lavadora con las sábanas de la semana.",
+        //     "dueDate": "17-11-2023",
+        //     "priority": "High",
+        //     "project": "Casa"
+        // };
 
-        const todo2 = {
-            "title": "Leer",
-            "description": "Leer un libro al mes",
-            "dueDate": "30/11/2023",
-            "priority": "Low",
-            "project": "Ocio"
-        };
+        // const todo2 = {
+        //     "title": "Leer",
+        //     "description": "Leer un libro al mes",
+        //     "dueDate": "30-11-2023",
+        //     "priority": "Low",
+        //     "project": "Ocio"
+        // };
 
-        console.log(todo2)
+        // console.log(new Date(12, 21, 2021));
         // localStorage.clear();
-        localStorage.setItem('todo1', JSON.stringify(todo1));
-        localStorage.setItem('todo2', JSON.stringify(todo2));
+        // localStorage.setItem('todo1', JSON.stringify(todo1));
+        // localStorage.setItem('todo2', JSON.stringify(todo2));
 
     } else {
         // we can't use it
@@ -37,14 +37,15 @@ export function addToLocalStorage (title, description, dueDate, priority,
     if (description == "") {
         description = "No description.";
     }
-    console.log(dueDate == "");
-    if (dueDate == "") {
-        dueDate = "No due date."
-    }
+    // console.log(dueDate == "Invalid Date");
+    // if (dueDate == "") {
+    //     dueDate = "No due date."
+    // }
+    dueDate = new Date(dueDate);
     const todo = new todoFactory(title, description, dueDate, priority, project);
     
     const json = JSON.parse(todo.createJSON());
-    console.log(json)
+    // console.log("date form localStorage/addToLocalStorage: " + dueDate);
 
     localStorage.setItem(title, JSON.stringify(json));
 }

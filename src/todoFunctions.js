@@ -12,7 +12,7 @@ export function getAllTodos() {
         if (localStorage.hasOwnProperty(key)) {
             const title = JSON.parse(localStorage.getItem(key)).title;
             const description = JSON.parse(localStorage.getItem(key)).description;
-            const dueDate = JSON.parse(localStorage.getItem(key)).dueDate;
+            const dueDate = new Date(JSON.parse(localStorage.getItem(key)).dueDate);
             const priority = JSON.parse(localStorage.getItem(key)).priority;
             const project = JSON.parse(localStorage.getItem(key)).project;
             cardGroup.appendChild(createCard(title, description, dueDate, priority, project));
@@ -44,11 +44,11 @@ function newTodoData(event) {
     const priority = document.getElementById('dropMenu').value;
     const dueDate = document.getElementById('dateInput').value;
 
-    console.log(title+description+priority+dueDate);
-
     if (title !== "") {
-        addToLocalStorage(title, description, dueDate, priority);
-        getAllTodos();
+        if (dueDate !== "") {
+            addToLocalStorage(title, description, dueDate, priority);
+            getAllTodos();
+        }
     }
 }
 
