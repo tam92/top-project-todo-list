@@ -1,15 +1,20 @@
 import { format, parseISO } from "date-fns";
+import { getAllTodos } from "./todoFunctions";
 
 // Creates and returns a single card
 export function createCard(title, description, dueDate, priority, project) {
     
     const card = document.createElement('div');
-    card.setAttribute('class', 'card');
+    card.classList.add('card');
+    card.classList.add('col');
     const cardBody = document.createElement('div');
-    cardBody.setAttribute('class', 'card-body');
+    cardBody.classList.add('card-body');
+
+    const cardFooter = document.createElement('div');
+    cardFooter.classList.add('card-footer');
 
     const titleCard = document.createElement('h3');
-    titleCard.setAttribute("class", "card-title");
+    titleCard.classList.add("card-header");
     titleCard.innerText = title;
 
     const descriptionCard = document.createElement('p');
@@ -19,18 +24,53 @@ export function createCard(title, description, dueDate, priority, project) {
     dueDateCard.innerText = "Due date: " + format((dueDate), 'PPPP');
 
     const priorityCard = document.createElement('p');
-    priorityCard.innerText = "Priority: " + priority;
+    priorityCard.innerText = priority + " priority";
+    
 
     const projectCard = document.createElement('p');
     projectCard.innerText = project;
 
-    cardBody.appendChild(titleCard);
+    // Change color according to priority
+    switch(priority) {
+        case 'Low':
+            priorityCard.classList.add('btn');
+            priorityCard.classList.add('btn-success');
+            break;
+        case 'Medium':
+            priorityCard.classList.add('btn');
+            priorityCard.classList.add('btn-warning');
+            break;
+        case 'High':
+            priorityCard.classList.add('btn');
+            priorityCard.classList.add('btn-danger')
+            break;
+    }
+
     cardBody.appendChild(descriptionCard);
     cardBody.appendChild(dueDateCard);
-    cardBody.appendChild(priorityCard);
     cardBody.appendChild(projectCard);
+    cardBody.appendChild(priorityCard);
+    priorityCard.classList.add('text-center');
 
+    // btn edit
+    const editTodo = document.createElement("input");
+    editTodo.setAttribute("type", "image");
+    editTodo.setAttribute("id", `${"edit-" + title}`);
+    editTodo.setAttribute("src", "/src/images/pencil-square.svg");
+    editTodo.setAttribute("style", "height: 20px");
+    cardFooter.appendChild(editTodo);
+
+    // btn delete
+    const deleteTodo = document.createElement('input');
+    deleteTodo.setAttribute('type', 'image');
+    deleteTodo.setAttribute('id', `${title}`);
+    deleteTodo.setAttribute("src", "/src/images/trash.svg");
+    deleteTodo.setAttribute('style', 'height: 20px');
+    cardFooter.appendChild(deleteTodo);
+
+    card.appendChild(titleCard);
     card.appendChild(cardBody);
+    card.appendChild(cardFooter);
 
     return card;
 }
@@ -39,7 +79,8 @@ export function createCard(title, description, dueDate, priority, project) {
 export function createCardGroup() {
     
     const cardGroup = document.createElement('div');
-    cardGroup.setAttribute('class', 'card-group');
+    cardGroup.classList.add('row');
+    cardGroup.classList.add('row-cols-3');
 
     return cardGroup;
 }
@@ -51,12 +92,12 @@ export function createForm() {
     const submitButton = document.createElement("button");
     submitButton.setAttribute("id", "add-todo");
     submitButton.innerHTML = "Add new TODO!";
-    submitButton.setAttribute('class', 'form-control');
+    submitButton.classList.add('class', 'form-control');
     
 
     // TITLE
     const groupTitle = document.createElement("div");
-    groupTitle.setAttribute('class', 'form-group');
+    groupTitle.classList.add('class', 'form-group');
 
     const titleLabel = document.createElement("label");
     titleLabel.setAttribute("for", "title");
@@ -66,7 +107,7 @@ export function createForm() {
     titleInput.setAttribute("type", "text");
     titleInput.setAttribute("name", "title");
     titleInput.setAttribute("id", "title");
-    titleInput.setAttribute('class', 'form-control');
+    titleInput.classList.add('class', 'form-control');
     titleInput.required = true;
     titleInput.autofocus = true;
 
@@ -75,7 +116,7 @@ export function createForm() {
 
     // DESCRIPTION
     const groupDescription = document.createElement("div");
-    groupDescription.setAttribute('class', 'form-group');
+    groupDescription.classList.add('class', 'form-group');
 
     const descriptionLabel = document.createElement("label");
     descriptionLabel.setAttribute("for", "description");
@@ -84,7 +125,7 @@ export function createForm() {
     const descriptionInput = document.createElement("textarea");
     descriptionInput.setAttribute("name", "description");
     descriptionInput.setAttribute("id", "description");
-    descriptionInput.setAttribute('class', 'form-control');
+    descriptionInput.classList.add('class', 'form-control');
     // descriptionInput.required = true;
 
     groupDescription.appendChild(descriptionLabel);
@@ -92,7 +133,7 @@ export function createForm() {
 
     // PRIORITY
     const groupPriority = document.createElement("div");
-    groupPriority.setAttribute('class', 'form-group');
+    groupPriority.classList.add('class', 'form-group');
 
     const selectLabel = document.createElement("label");
     selectLabel.setAttribute("for", "priority");
@@ -102,7 +143,7 @@ export function createForm() {
     selectInput.setAttribute("name", "priority")
     selectInput.setAttribute("list", "priorityName");
     selectInput.setAttribute("id", "dropMenu");
-    selectInput.setAttribute('class', 'form-control');
+    selectInput.classList.add('class', 'form-control');
 
     const dataList = document.createElement("datalist");
     dataList.setAttribute("id", "priorityName");
@@ -116,21 +157,17 @@ export function createForm() {
     const highOp = document.createElement("option");
     highOp.innerHTML = "High";
     highOp.setAttribute("value", "High");
-    const criticalOp = document.createElement("option");
-    criticalOp.innerHTML = "Critical";
-    criticalOp.setAttribute("value", "Critical");
         // Append the options
         selectInput.appendChild(lowOp);
         selectInput.appendChild(mediumOp);
         selectInput.appendChild(highOp);
-        selectInput.appendChild(criticalOp);
 
     groupPriority.appendChild(selectLabel);
     groupPriority.appendChild(selectInput);
 
     // DATE
     const groupDate = document.createElement("div");
-    groupDate.setAttribute('class', 'form-group');
+    groupDate.classList.add('class', 'form-group');
 
     const dateLabel = document.createElement("label");
     dateLabel.setAttribute("for", "date");
@@ -140,7 +177,7 @@ export function createForm() {
     dateInput.setAttribute("name", "date");
     dateInput.setAttribute("id", "dateInput");
     dateInput.setAttribute("type", "date");
-    dateInput.setAttribute('class', 'form-control');
+    dateInput.classList.add('class', 'form-control');
 
     groupDate.appendChild(dateLabel);
     groupDate.appendChild(dateInput);
@@ -155,3 +192,5 @@ export function createForm() {
 
     return form;
 }
+
+

@@ -40,3 +40,4 @@ for different priorities).
   - jquery & popper.js (necessary dependencies for Bootstrap)
 
 ## Credits
+ - Delete icon: https://pictogrammers.com/library/mdi/icon/delete/

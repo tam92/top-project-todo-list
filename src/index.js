@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import todoFactory from './todoFactory';
+import './style.css';
 import { addNewTodo, cleanMain, getAllTodos } from './todoFunctions';
 import { populateStorage } from './localStorage';
 
